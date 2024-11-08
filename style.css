@@ -1,7 +1,159 @@
-html, body {
-  margin: 0;
-  padding: 0;
+h1, h2, h3, h5 {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
 }
-canvas {
-  display: block;
+
+h1 {
+    text-align: center;
+    font-size: 5.7em;
+    margin-bottom: -15px;
+    color: white;
+   
+}
+h1.small {
+    font-size: 1.8em;
+    margin-top: 20px;
+     margin-bottom: 0;
+    line-height: 7px;
+}
+h2 {
+    font-size: 2.5em;
+    line-height: 1em;
+    color: rgb(243,192,121);;
+}
+h3 {
+    font-size: 2em;
+    line-height: 1em;
+    text-align: center;
+    color: darkred;
+}
+
+h4, p {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h4 {
+     font-size: 2em;
+    line-height: 1em;
+    text-align: center;
+}
+h5 {
+    font-size: 1em;
+    color: rgb(243,192,121);
+    margin-top: 14px;
+    line-height: 1em;
+}
+
+/* li, h6, {
+    font-family: "Montserrat",sans-serif;
+  font-weight: 400;
+  
+  font-style: normal; 
+} */
+h6 {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+li  {
+    margin-top: 14px;
+      font-size: 1.2em;
+}
+p {
+/*
+    margin-top: 20px;
+    margin-left: 20px;
+*/
+    font-size: 1.2em;
+    line-height: 1.1em;
+    text-indent: 1.5em;
+}
+figcaption {
+    margin-top: 10px;
+    font-size: 0.8em;
+}
+/*///// NAV STYLES /////*/
+nav ul {
+    list-style-type: none; /* remove bullets */
+    margin: 0;
+    padding: 14px;
+    text-align: center;
+}
+
+nav li {
+    display: inline; /* change li from block level element to inline */
+       
+}
+nav a:link, nav a:visited {
+    color: black;
+	  text-decoration: none; /*remove default underlines from links*/
+	  padding: 2px 6px;
+	  margin: 0 3px;
+	  font-size: 0.7em;
+      font-weight: 600;
+  
+}
+nav a:hover {	
+ text-decoration: underline;
+  color: black;
+	}
+
+/*////// CLASSES ////////*/
+.rule-top {
+    border-top: 1px solid rgb(227, 226, 225);
+    margin-top: 10px;
+    padding-top: 10px;
+}
+.rule-top-sp {
+    border-top: 1px solid rgb(227, 226, 225);
+    margin-top: 10px;
+    padding-top: 20px;
+}
+.rule-sides {
+    padding: 0 20px;
+    border-right: 1px solid rgb(227, 226, 225);
+    border-left: 1px solid rgb(227, 226, 225);
+}
+.imgfloat {
+    float: left;
+    margin-left: 12px;
+}
+.imgsizm {
+    width: 180px;
+/*    margin-top: 50px;*/
+ 
+}
+.imgsizs {
+    width: 78px;
+    margin-top: 30px;
+    
+}
+.border {
+    border: 3px solid black;
+    margin: 0 8px;
+}
+.center {
+    text-align: center;
+    font-size: 1.5em;
+}
+.container img {
+    width: 400px;
+    height: 400px;
+}
+
+body {
+    background-color: rgb(143,240,68);
+  }
+  div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.centered {
+    width: 200px;               /* Set a width */
+    margin: 0 auto;             /* Auto left and right margins */
+    text-align: center;         /* Center text inside the block */
+    border: 1px solid #000;     /* Optional: add a border for visibility */
 }
