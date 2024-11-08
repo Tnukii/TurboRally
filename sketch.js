@@ -1,29 +1,30 @@
 let state = 0;
-let timer = 30;
-let resetT = 30;
+let timer = 10;
+let newtimer;
+let resetT = 10;
 let points = 0
 let resetP = 0
-let flag = [];
+let flags = []; //create empty array for flags
 
 //Things to add: Checkpoints that add points and time, a parameter that adds points when completing a lap, the final score after finishing a game
 
 //Box1 Parameters
 let x1 = 100;
 let y1 = 100;
-let w1 = 50;
-let h1 = 50;
+let w1 = 100;
+let h1 = 100;
 
 //Box2 Parameters
 let x2 = 200;
 let y2 = 100;
-let w2 = 50;
-let h2 = 50;
+let w2 = 100;
+let h2 = 100;
 
 //Box3 Parameters
 let x3 = 300;
 let y3 = 100;
-let w3 = 50;
-let h3 = 50;
+let w3 = 100;
+let h3 = 100;
 
 //Car Parameters
 let trackImg, carImg;
@@ -33,6 +34,13 @@ const maxSpeed = 5;
 const acceleration = 0.1;
 const braking = 0.05;
 const steering = 0.05;
+
+//Map 1 Flag 1 Parameters
+let xf1 = 45;
+let yf1 = 100;
+let wf1 = 25;
+let hf1 = 25;
+let flagImg;
 
 function preload() {
   img1 = loadImage("trmm.png");
@@ -53,6 +61,8 @@ function setup() {
   fill(255);
   text("CLICK TO START", 100, 125, 200);
   
+  
+  
   carX1 = width / 1.155; //Map 1 Starting Position
   carY1 = height / 2;
   carX2 = width / 7.5; //Map 2 Starting Position
@@ -65,6 +75,8 @@ function setup() {
 }
 
 function draw() {
+  
+
   
   if (state == 1) {
     //Main Menu
@@ -139,6 +151,7 @@ function mousePressed(){
 
 function draw1() {
   //main menu-have states that direct to controls and credits, leaderboard, and gameplay
+  imageMode(CORNER);
   background(img1);
   fill(245, 229, 10);
   textSize(15);
@@ -150,6 +163,7 @@ function draw1() {
 
 function draw2() {
   //map selection
+  imageMode(CORNER);
   b1();
   b2();
   b3();
@@ -162,11 +176,13 @@ function draw2() {
 
 function draw3() {
   //controls
+  imageMode(CORNER);
   background(img2);
 }
 
 function draw4() {
   //credits
+  imageMode(CORNER);
   background(img3);
   fill(0);
   text("WEB DESIGN", 30, 80, 100);
@@ -182,41 +198,96 @@ function draw4() {
 
 function draw5() {
   //Beginner Level-once completed redirect to leaderboard
+  
+  let f1 = new Flag(200, 90);
+  let f2 = new Flag(300, 200);
+  let f3 = new Flag(50, 100);
+  
+  flags.push(f1);
+  flags.push(f2);
+  flags.push(f3);
+  
+ 
+  
+  imageMode(CORNER);
+
+  m1f1();
   background(img5);
   car1();
   countdown();
   text(timer, 380, 30);
+  lapCount();
   
-  for (let i = 0; i < flag.length; i++) {
-    flag[i].show();
-    flag[i].overlap(carX1, carY1);
-  }
-
-  collectFlag();
-  flagPlacement();
-  score();
-  //image(flagImg, width/2, height/2);
+  flags[0].display();
+  flags[1].display();
+  flags[2].display();
+  flags[0].addTime(carX1, carY1);
+  flags[1].addTime(carX1, carY1);
+  flags[2].addTime(carX1, carY1);
+  
+  // checkP(200, 90)
+  // checkP(300, 200)
+  // checkP(50, 100)
+  //m1f1();
+  
 }
 
 function draw6() {
-  //Intermediate Level-once completed redirect to leaderboard
+  //Intermediate Level-once completed redirect to leaderboard  
+  imageMode(CORNER);
   background(img6);
   car2();
   countdown();
   text(timer, 40, 30);
+  
+  let f1 = new Flag(200, 90);
+  let f2 = new Flag(300, 200);
+  let f3 = new Flag(50, 100);
+  
+  flags.push(f1);
+  flags.push(f2);
+  flags.push(f3);
+  
+  flags[0].display();
+  flags[1].display();
+  flags[2].display();
+  flags[0].addTime(carX2, carY2);
+  flags[1].addTime(carX2, carY2);
+  flags[2].addTime(carX2, carY2);
 }
 
 function draw7() {
   //Expert Level-once completed redirect to leaderboard
+  imageMode(CORNER);
   background(img7);
   car3();
   countdown();
   text(timer, 210, 130);
+  
+  let f1 = new Flag(375, 40);
+  let f2 = new Flag(300, 220);
+  let f3 = new Flag(160, 130);
+  
+  flags.push(f1);
+  flags.push(f2);
+  flags.push(f3);
+  
+  flags[0].display();
+  flags[1].display();
+  flags[2].display();
+  flags[0].addTime(carX3, carY3);
+  flags[1].addTime(carX3, carY3);
+  flags[2].addTime(carX3, carY3);
 }
 
 function draw8() {
   //End Screen when time is up
+  imageMode(CORNER);
   background(150);
+  fill(0);
+  text("TIME'S UP", width/2, height/2);
+  textSize(20);
+  text("PRESS SPACE TO GO BACK TO MAIN MENU", width/2, 200);
 }
 
 function car1() {
@@ -351,40 +422,9 @@ function b3() {
   rect(x3, y3, w3 ,h3);
 }
 
-class Flag {
-  constructor(tempX, tempY, tempR) {
-    this.x = tempX;
-    this.y = tempY;
-    this.r = tempR;
-  }
-  
-  show() {
-    image(flagImg, this.x, this.y, this.r);
-  }
-  
-  overlap(px, py) {
-    let d = dist(px, py, this.x, this.y);
-    if (d < 25) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-function collectFlag() {
-  for (let i = 0; i < flag.length; i++) {
-    if (flag[i].overlap(carX1, carY1)) {
-      timer ++;
-      points ++;
-    }
-  }
-}
-
-function flagPlacement() {
-  if (timer > 0) {
-    let flag = new Flag(random(width, height), random(height), 10, 10);
-  }
+function m1f1() {
+  fill(250);
+  rect(xf1, yf1, wf1, hf1);
 }
 
 function countdown() {
@@ -394,18 +434,28 @@ function countdown() {
   if (frameCount % 60 == 0 && timer > 0){
     timer --;
   }
-  if (timer == 0) {
+  
+  if (timer < 0) {
     state = 8;
     timer = resetT;
   }
 }
 
-function score() {
+function checkP(x, y) {
+  image(flagImg, x, y)
+}
+
+// function pass() {
+//   if ((carX1 > xf1) && (carX1 < xf1+wf1) && (carY1 > yf1) && (carY1 < yf1+hf1)) {
+//   newTimer == timer + 5;
+//  }
+// }
+
+function lapCount() {
   textSize(25);
   fill('blue');
-  text("SCORE ="+ points, 20, 20);
+  text("LAP ="+ points, 40, 20);
   
-  points = points;
   
   if (timer == 0) {
     points = resetP;
